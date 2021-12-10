@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Header from './components/Header'
-import NewSpent from './img/nuevo-gasto.svg'
 import Modal from './components/Modal'
+import List from './components/List'
+import NewSpent from './img/nuevo-gasto.svg'
 
 function App() {
 
@@ -9,12 +10,20 @@ function App() {
   const [isValid, setIsValid] = useState(false)
   const [modal, setModal] = useState(false)
   const [animatedModal, setAnimatedModal] = useState(false)
+  const [newSpent, setNewSpent] = useState([])
+
+  useEffect(()=>{console.log(newSpent)}, [newSpent]) //TODO Local Storage
+
 
   function handleNewSpent () {
     setModal(true)
     setTimeout(() => {
       setAnimatedModal(true)
     }, 500);
+  }
+
+  function addBudget (spent){
+    setNewSpent([...newSpent, spent])
   }
 
   return (
@@ -26,18 +35,26 @@ function App() {
       setIsValid={setIsValid}
       />
       {isValid && (
-      <div className='nuevo-gasto'>
-        <img 
-        src={NewSpent}
-        onClick={handleNewSpent}
-        />
-      </div>
+        <>
+          <main>
+            <List 
+              newSpent={newSpent}
+            />
+          </main>
+          <div className='nuevo-gasto'>
+            <img 
+            src={NewSpent}
+            onClick={handleNewSpent}
+            />
+          </div>
+        </>
       )}
   	
       {modal && <Modal
                 setModal={setModal}
                 animatedModal={animatedModal}
                 setAnimatedModal={setAnimatedModal}
+                addBudget={addBudget}
                 />}
 
     </div>
