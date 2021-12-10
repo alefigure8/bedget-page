@@ -1,13 +1,15 @@
+import Spent from './Spent'
+
 function List({newSpent}) {
     return (
-        <div>
-            <ul>{newSpent.map(spent => (
-                <>
-                    <li>{spent.name}</li>
-                    <li>{spent.amount}</li>
-                    <li>{spent.category}</li>
-                </>
-            ))}</ul>
+        <div className="listado-gastos contenedor">
+            <h2>{newSpent.length ? 'Gastos' : 'No hay gastos aún'}</h2>
+            {newSpent.map(spent => (
+                <Spent
+                key={spent.id} 
+                spent={spent}
+                />
+            ))}
         </div>
     )
 }

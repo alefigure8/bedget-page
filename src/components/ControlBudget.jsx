@@ -1,12 +1,18 @@
-import React from 'react'
+import { useEffect, useState } from 'react'
+import {formatCurrency} from '../helpers/index'
 
-function ControlBudget({budget}) {
+function ControlBudget({budget, newSpent}) {
+    const [available, setAvailable] = useState(0)
+    const [spent, setSpent] = useState(0)
 
-    function formatCurrency (currency){
-        return currency.toLocaleString('en-US', {
-            style: 'currency',
-            currency: 'USD'
-        })
+    useEffect(()=>{
+        calcSpent()
+    }, [newSpent])
+
+    function calcSpent () {
+        const totalSpent = newSpent.reduce((preview, current) => preview + current.amount, 0)
+        setAvailable(budget - totalSpent) 
+        setSpent(totalSpent)
     }
 
     return (
@@ -19,10 +25,10 @@ function ControlBudget({budget}) {
                 <span>Budget:</span> {formatCurrency(budget)}
                 </p>
                 <p>
-                <span>Available:</span> {formatCurrency(0)}
+                <span>Available:</span> {formatCurrency(available)}
                 </p>
                 <p>
-                <span>Spent:</span> {formatCurrency(0)}
+                <span>Spent:</span> {formatCurrency(spent)}
                 </p>
             </div>
         </div>

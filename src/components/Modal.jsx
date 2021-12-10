@@ -36,6 +36,7 @@ function Modal({setModal, animatedModal, setAnimatedModal, addBudget}) {
         // create object with items
         let obj = {
             id: generateId(),
+            date: Date.now(),
             name,
             amount,
             category
@@ -115,7 +116,7 @@ function Modal({setModal, animatedModal, setAnimatedModal, addBudget}) {
                         <option value="food">Food</option>
                         <option value="house">House</option>
                         <option value="various">Various</option>
-                        <option value="entertainment">Entertainment</option>
+                        <option value="leisure">Leisure</option>
                         <option value="health">Health</option>
                         <option value="subscriptions">Subscriptions</option>
                     </select>

@@ -27,8 +27,9 @@ function App() {
   }
 
   return (
-    <div>
+    <div className={modal ? 'fijar' : undefined}>
       <Header 
+      newSpent={newSpent}
       setBudget={setBudget}
       budget={budget}
       isValid={isValid}
