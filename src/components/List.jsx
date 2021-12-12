@@ -1,15 +1,41 @@
 import Spent from './Spent'
 
-function List({newSpent}) {
+function List({
+    newSpent, 
+    setEditSpent, 
+    handleDelete, 
+    filterSpent,
+    filter
+}) {
     return (
         <div className="listado-gastos contenedor">
-            <h2>{newSpent.length ? 'Gastos' : 'No hay gastos aún'}</h2>
-            {newSpent.map(spent => (
-                <Spent
-                key={spent.id} 
-                spent={spent}
-                />
-            ))}
+           {
+                filter ? (
+                    <>
+                        <h2>{filterSpent.length ? 'Gastos' : `No result for ${filter.slice(0, 1).toUpperCase() + filter.slice(1)}`}</h2>
+                        {filterSpent.map(spent => (
+                            <Spent
+                            key={spent.id} 
+                            spent={spent}
+                            setEditSpent={setEditSpent}
+                            handleDelete={handleDelete}
+                            />
+                        ))}
+                    </>
+                ) : (
+                    <>
+                        <h2>{newSpent.length ? 'Gastos' : 'Add a new spent to start'}</h2>
+                        {newSpent.map(spent => (
+                            <Spent
+                            key={spent.id} 
+                            spent={spent}
+                            setEditSpent={setEditSpent}
+                            handleDelete={handleDelete}
+                            />
+                        ))}
+                    </>
+                )
+            }
         </div>
     )
 }

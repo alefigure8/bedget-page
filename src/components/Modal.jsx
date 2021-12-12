@@ -1,15 +1,29 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import closeBtn from '../img/cerrar.svg'
 import Message from './Message'
-import { generateId } from '../helpers/index'
 
-function Modal({setModal, animatedModal, setAnimatedModal, addBudget}) {
+function Modal({
+    setModal,
+    animatedModal,
+    setAnimatedModal,
+    addBudget, 
+    editSpent,
+    setEditSpent
+}) {
 
     // states
     const [name, setName] = useState('')
     const [amount, setAmount] = useState(0)
     const [category, setCategory] = useState('')
     const [msg, setMsg] = useState('')
+
+    useEffect(()=>{
+        if(Object.keys(editSpent).length > 0){
+            setName(editSpent.name)
+            setAmount(editSpent.amount)
+            setCategory(editSpent.category)
+        }
+    },[editSpent])
 
     // onSubmit
     function handleSubmit(e){
@@ -33,14 +47,11 @@ function Modal({setModal, animatedModal, setAnimatedModal, addBudget}) {
             return
         }
 
-        // create object with items
         let obj = {
-            id: generateId(),
-            date: Date.now(),
-            name,
-            amount,
-            category
-        }
+                name,
+                amount,
+                category
+            }  
 
         // take object in App
         addBudget(obj)
@@ -61,6 +72,7 @@ function Modal({setModal, animatedModal, setAnimatedModal, addBudget}) {
 
     // clase button
     function handleClose () {
+        setEditSpent({})
         setAnimatedModal(false)
         setTimeout(() => {
             setModal(false)
@@ -80,7 +92,7 @@ function Modal({setModal, animatedModal, setAnimatedModal, addBudget}) {
                 onSubmit={handleSubmit}
                 className={`formulario ${animatedModal ? "animar" : "cerrar"}`}
             >
-                <legend> New Spent </legend>
+                <legend> {editSpent.id ? 'Edit Spent' : 'New Spent'} </legend>
 
                 {msg && <Message tipo="error">{msg}</Message>}
 
@@ -121,7 +133,7 @@ function Modal({setModal, animatedModal, setAnimatedModal, addBudget}) {
                         <option value="subscriptions">Subscriptions</option>
                     </select>
                 </div>
-                <input type="submit" value="Add Spend"/>
+                <input type="submit" value={editSpent.id ? "edit spent" : "Add Spend"}/>
             </form>
         </div>
     )

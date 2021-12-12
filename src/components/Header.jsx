@@ -2,7 +2,14 @@ import React from 'react'
 import NewBudget from './NewBudget'
 import ControlBudget from './ControlBudget'
 
-function header({setBudget, budget, isValid, setIsValid, newSpent}) {
+function header({
+        setBudget, 
+        budget, 
+        isValid, 
+        setIsValid, 
+        newSpent, 
+        setNewSpent
+    }) {
     return (
         <header>
             <h1>Budget Control</h1>
@@ -11,11 +18,15 @@ function header({setBudget, budget, isValid, setIsValid, newSpent}) {
                 <ControlBudget 
                 newSpent={newSpent}
                 budget={budget}
+                setNewSpent = {setNewSpent}
+                setIsValid={setIsValid}
+                setBudget={setBudget}
                 />
                 :
 
                 <NewBudget 
                   setBudget={setBudget}
+                  setBudget = {setBudget}
                   budget={budget}
                   setIsValid={setIsValid}
                 />
